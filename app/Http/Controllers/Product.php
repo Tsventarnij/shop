@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreProductRequest;
+use App\Models\Type;
 use App\Repository\ProductRepository;
 use Illuminate\Http\Request;
 use \App\Models\Product as ProductModel;
@@ -47,23 +49,15 @@ class Product extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param StoreProductRequest $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
-        $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-            'price' => 'required',
-            'category_id' => 'required',
-            ]);
-        $input = $request->only('title', 'description', 'price', 'category_id');
-        $product = Auth::user()->company->products()->create($input);
+        $productDTO = $request->only('title', 'description', 'price', 'category_id', 'media', 'add_type', 'add_values');
+        $this->productRepo->create($productDTO);
 
-        if ($request->hasFile('media')) {
-            $files = $request->file('media');
-            $this->productRepo->addMedia($files, $product->id);
-        }
+
         return redirect(route('showMyProducts'));
     }
 
@@ -95,18 +89,12 @@ class Product extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param StoreProductRequest $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreProductRequest $request, int $id)
     {
-        $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-            'price' => 'required',
-            'category_id' => 'required',
-        ]);
         $input = $request->only('title', 'description', 'price', 'category_id');
         Auth::user()->company->products()->find($id)->update($input);
         if ($request->hasFile('media')) {

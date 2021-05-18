@@ -89,6 +89,9 @@
                                         <a class="dropdown-item" href="{{ route('categoryCreate') }}">
                                             {{ __('Add Category') }}
                                         </a>
+                                        <a class="dropdown-item" href="{{ route('categoryList') }}">
+                                            {{ __('List of categories') }}
+                                        </a>
                                     @endif
                                     <hr>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
@@ -113,5 +116,6 @@
             @yield('content')
         </main>
     </div>
+    @stack('scripts')
 </body>
 </html>

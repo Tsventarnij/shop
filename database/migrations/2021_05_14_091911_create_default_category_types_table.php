@@ -18,7 +18,9 @@ class CreateDefaultCategoryTypesTable extends Migration
             $table->unsignedInteger('category_id');
             $table->unsignedInteger('type_id');
             $table->timestamps();
-            $table->foreign('category_id')->references('id')->on('categories');
+            $table->foreign('category_id')->references('id')->on('categories')
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
             $table->foreign('type_id')->references('id')->on('types');
         });
     }

@@ -17,6 +17,7 @@ class CreateTypesTable extends Migration
             $table->unsignedInteger('id', true);
             $table->string('name');
             $table->timestamps();
+            $table->unique('name');
         });
     }
 

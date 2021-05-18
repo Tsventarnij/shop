@@ -53,4 +53,12 @@ class ProductRepository
         }
         $product->delete();
     }
+
+    public function create($request)
+    {
+        $input = $request->only('title', 'description', 'price', 'category_id', 'add_type', 'add_values');
+        $product = Auth::user()->company->products()->create($input);
+
+
+    }
 }

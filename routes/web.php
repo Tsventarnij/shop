@@ -1,6 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use \App\Http\Controllers\{
+    Company,
+    Product,
+    ProductMedia,
+    Category
+};
 
 /*
 |--------------------------------------------------------------------------
@@ -13,30 +19,32 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [\App\Http\Controllers\Product::class, 'index']);
+Route::get('/', [Product::class, 'index']);
 
 Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/company/create', [App\Http\Controllers\Company::class, 'create']);
-    Route::post('/company/create', [App\Http\Controllers\Company::class, 'store'])->name('companyCreate');
-    Route::get('/company/edit', [App\Http\Controllers\Company::class, 'edit']);
-    Route::post('/company/edit', [App\Http\Controllers\Company::class, 'update'])->name('companyUpdate');
-    Route::get('/product/create', [App\Http\Controllers\Product::class, 'create']);
-    Route::post('/product/create', [App\Http\Controllers\Product::class, 'store'])->name('productCreate');
-    Route::get('/product/edit/{id}', [App\Http\Controllers\Product::class, 'edit']);
-    Route::post('/product/edit/{id}', [App\Http\Controllers\Product::class, 'update'])->name('productUpdate');
-    Route::get('/product/delete/{id}', [App\Http\Controllers\Product::class, 'destroy'])->name('productDelete');
-    Route::get('/product_media/delete/{id}', [App\Http\Controllers\ProductMedia::class, 'destroy'])->name('mediaDelete');
-    Route::get('/my_products', [App\Http\Controllers\Product::class, 'displayMy'])->name('showMyProducts');
-    Route::get('/category/create', [App\Http\Controllers\Category::class, 'create']);
-    Route::post('/category/create', [App\Http\Controllers\Category::class, 'store'])->name('categoryCreate');
-    Route::get('/category/edit', [App\Http\Controllers\Category::class, 'edit']);
-    Route::post('/category/edit', [App\Http\Controllers\Category::class, 'update'])->name('categoryUpdate');
-    Route::get('/category/removeType/{id}', [App\Http\Controllers\Category::class, 'removeType'])->name('defaultTypeDelete');
+    Route::get('/company/create', [Company::class, 'create']);
+    Route::post('/company/create', [Company::class, 'store'])->name('companyCreate');
+    Route::get('/company/edit', [Company::class, 'edit']);
+    Route::post('/company/edit', [Company::class, 'update'])->name('companyUpdate');
+    Route::get('/product/create', [Product::class, 'create']);
+    Route::post('/product/create', [Product::class, 'store'])->name('productCreate');
+    Route::get('/product/edit/{id}', [Product::class, 'edit']);
+    Route::post('/product/edit/{id}', [Product::class, 'update'])->name('productUpdate');
+    Route::get('/product/delete/{id}', [Product::class, 'destroy'])->name('productDelete');
+    Route::get('/product_media/delete/{id}', [ProductMedia::class, 'destroy'])->name('mediaDelete');
+    Route::get('/my_products', [Product::class, 'displayMy'])->name('showMyProducts');
+    Route::get('/category/create', [Category::class, 'create']);
+    Route::post('/category/create', [Category::class, 'store'])->name('categoryCreate');
+    Route::get('/category/edit/{id}', [Category::class, 'edit']);
+    Route::post('/category/edit/{id}', [Category::class, 'update'])->name('categoryUpdate');
+    Route::get('/category/list', [Category::class, 'index'])->name('categoryList');
+    Route::get('/category/delete/{id}', [Category::class, 'destroy'])->name('categoryDelete');
+    Route::get('/category/removeType/{id}', [Category::class, 'removeType'])->name('defaultTypeDelete');
 });
 
-Route::get('/home', [App\Http\Controllers\Product::class, 'index'])->name('home');
-Route::get('/category/{id}', [App\Http\Controllers\Product::class, 'index']);
-Route::get('/product/{id}', [App\Http\Controllers\Product::class, 'show']);
-Route::get('/company/{id}', [App\Http\Controllers\Company::class, 'show'])->name('companyShow');
+Route::get('/home', [Product::class, 'index'])->name('home');
+Route::get('/category/{id}', [Product::class, 'index']);
+Route::get('/product/{id}', [Product::class, 'show']);
+Route::get('/company/{id}', [Company::class, 'show'])->name('companyShow');

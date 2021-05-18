@@ -75,17 +75,15 @@
 
                             <div class="form-group row">
                                 <label for="media" class="col-md-4 col-form-label text-md-right">{{ __('Media') }}</label>
-
                                 <div class="col-md-6">
-                                    <a class="btn btn-info" href="#" onclick="event.preventDefault();
-                                            const input = document.createElement('input');
-                                            const mediaDiv = document.getElementById('new-media');
-                                            input.setAttribute('type', 'file');
-                                            input.setAttribute('name', 'media[]');
-                                            input.setAttribute('accept', 'image/png, image/jpeg, video/mp4');
-                                            mediaDiv.insertBefore(input, mediaDiv.firstChild);">
-                                        {{ __('Add Media') }}
-                                    </a>
+                                    <a class="btn btn-info" href="#" onclick="
+                                    event.preventDefault();
+                                    const input = document.createElement('input');
+                                    const mediaDiv = document.getElementById('new-media');
+                                    input.setAttribute('type', 'file');
+                                    input.setAttribute('name', 'media[]');
+                                    input.setAttribute('accept', 'image/png, image/jpeg, video/mp4');
+                                    mediaDiv.insertBefore(input, mediaDiv.firstChild);">{{ __('Add Media') }}</a>
                                     <div id="new-media"></div>
                                     @if (isset($medias))
                                         <div>
@@ -100,6 +98,36 @@
                                 </div>
                             </div>
 
+                            <div class="form-group row">
+                                <label for="media" class="col-md-4 col-form-label text-md-right">{{ __('Types') }}</label>
+                                <div class="col-md-6">
+                                    <div id="default-type"></div>
+
+                                    <a class="btn btn-info" href="" onclick="event.preventDefault();
+                                            const select = document.createElement('select');
+                                            const input = document.createElement('input');
+                                            const typeDiv = document.getElementById('add-type');
+                                            const optionData = {{$types}};
+                                            const firstOption = document.createElement('option');
+                                            firstOption.innerText = 'Choose type';
+                                            firstOption.setAttribute('selected', true);
+                                            firstOption.setAttribute('disabled', true);
+                                            select.appendChild(firstOption);
+                                            optionData.forEach(element => {
+                                                const option = document.createElement('option');
+                                                option.innerText = element.name;
+                                                option.setAttribute('value', element.id);
+                                                select.appendChild(option);
+                                            });
+                                            select.setAttribute('class', 'form-control');
+                                            select.setAttribute('name', 'add_type[]');
+                                            input.setAttribute('class', 'form-control');
+                                            input.setAttribute('name', 'add_values[]');
+                                            typeDiv.insertBefore(select, typeDiv.firstChild);
+                                            typeDiv.insertBefore(input, typeDiv.firstChild);">{{ __('Add type') }}</a>
+                                    <div id="add-type"></div>
+                                </div>
+                            </div>
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
                                     <button type="submit" class="btn btn-primary">

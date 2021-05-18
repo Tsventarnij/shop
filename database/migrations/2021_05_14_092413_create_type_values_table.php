@@ -19,6 +19,7 @@ class CreateTypeValuesTable extends Migration
             $table->string('values');
             $table->timestamps();
             $table->foreign('type_id')->references('id')->on('types');
+            $table->unique(['type_id', 'values']);
         });
     }
 

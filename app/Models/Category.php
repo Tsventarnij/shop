@@ -9,8 +9,12 @@ class Category extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'title',
+    ];
+
     public function defaultTypes()
     {
-        return $this->hasMany(DefaultCategoryTypes::class);
+        return $this->belongsToMany(Type::class, 'default_category_types');
     }
 }
