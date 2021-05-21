@@ -4,6 +4,7 @@ namespace App\Repository;
 use App\Factories\ProductMediaView\Factory as ProductMediaViewFactory;
 use App\Builder\ProductMedia as ProductMediaBuilder;
 use App\Models\Product;
+use App\Models\TypeValues;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -54,11 +55,31 @@ class ProductRepository
         $product->delete();
     }
 
-    public function create($request)
+    public function create(array $data)
     {
-        $input = $request->only('title', 'description', 'price', 'category_id', 'add_type', 'add_values');
-        $product = Auth::user()->company->products()->create($input);
+        $product = Auth::user()->company->products()
+            ->create(array_intersect_key($data, array_flip(['title', 'description', 'price', 'category_id'])));
 
+        if (isset($data['media'])) {
+            $this->addMedia($data['media'], $product->id);
+        }
 
+        if (isset($data['add_type'])) {
+            foreach ($data['add_type'] as $index => $type) {
+                if (is_numeric($data['add_values'][$index])) {
+                    $valuesId =  $data['add_values'][$index];
+                } else {
+                    $valuesId = TypeValues::create(['type_id' => $type, 'values' => $data['add_values'][$index]]);
+                }
+                $product->properties()->create(['type_value_id' => $valuesId]);
+            }
+        }
+
+        return $product;
+    }
+
+    public function getMy()
+    {
+        return Product::where('company_id', Auth::user()->company->id)->with('category')->get()->toArray();
     }
 }

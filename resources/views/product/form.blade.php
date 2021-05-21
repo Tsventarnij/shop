@@ -13,9 +13,9 @@
                                 <input id="prodId" name="id" type="hidden" value="{{$id}}">
                             @endif
                             <div class="form-group row">
-                                <label for="title" class="col-md-4 col-form-label text-md-right">{{ __('Title') }}</label>
+                                <label for="title" class="col-md-3 col-form-label text-md-right">{{ __('Title') }}</label>
 
-                                <div class="col-md-6">
+                                <div class="col-md-8">
                                     <input id="title" type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title') ?? $title ?? '' }}" required autocomplete="name" autofocus>
 
                                     @error('title')
@@ -27,9 +27,9 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="description" class="col-md-4 col-form-label text-md-right">{{ __('Description') }}</label>
+                                <label for="description" class="col-md-3 col-form-label text-md-right">{{ __('Description') }}</label>
 
-                                <div class="col-md-6">
+                                <div class="col-md-8">
                                     <input id="description" type="text" class="form-control @error('description') is-invalid @enderror" name="description" value="{{ old('description') ?? $description ?? '' }}" autofocus>
                                     @error('description')
                                     <span class="invalid-feedback" role="alert">
@@ -40,9 +40,9 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="price" class="col-md-4 col-form-label text-md-right">{{ __('Price') }}</label>
+                                <label for="price" class="col-md-3 col-form-label text-md-right">{{ __('Price') }}</label>
 
-                                <div class="col-md-6">
+                                <div class="col-md-8">
                                     <input id="price" type="number" class="form-control @error('price') is-invalid @enderror" name="price" value="{{ old('price') ?? $price ?? '' }}" autofocus>
                                     @error('price')
                                     <span class="invalid-feedback" role="alert">
@@ -53,9 +53,9 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="category" class="col-md-4 col-form-label text-md-right">{{ __('Category') }}</label>
+                                <label for="category" class="col-md-3 col-form-label text-md-right">{{ __('Category') }}</label>
 
-                                <div class="col-md-6">
+                                <div class="col-md-8">
                                     <div class="selectWrapper">
                                     <select id="category" name="category_id" class="form-select" aria-label="Default select example">
                                         @if(empty(old('category_id')))
@@ -74,8 +74,8 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="media" class="col-md-4 col-form-label text-md-right">{{ __('Media') }}</label>
-                                <div class="col-md-6">
+                                <label for="media" class="col-md-3 col-form-label text-md-right">{{ __('Media') }}</label>
+                                <div class="col-md-8">
                                     <a class="btn btn-info" href="#" onclick="
                                     event.preventDefault();
                                     const input = document.createElement('input');
@@ -99,13 +99,14 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="media" class="col-md-4 col-form-label text-md-right">{{ __('Types') }}</label>
-                                <div class="col-md-6">
+                                <label for="media" class="col-md-3 col-form-label text-md-right">{{ __('Types') }}</label>
+                                <div class="col-md-8">
                                     <div id="default-type"></div>
 
                                     <a class="btn btn-info" href="" onclick="event.preventDefault();
                                             const select = document.createElement('select');
                                             const input = document.createElement('input');
+                                            const inputDiv = document.createElement('div');
                                             const typeDiv = document.getElementById('add-type');
                                             const optionData = {{$types}};
                                             const firstOption = document.createElement('option');
@@ -119,12 +120,14 @@
                                                 option.setAttribute('value', element.id);
                                                 select.appendChild(option);
                                             });
-                                            select.setAttribute('class', 'form-control');
+                                            select.setAttribute('class', 'form-control col-md-5');
                                             select.setAttribute('name', 'add_type[]');
-                                            input.setAttribute('class', 'form-control');
+                                            input.setAttribute('class', 'form-control col-md-7');
                                             input.setAttribute('name', 'add_values[]');
-                                            typeDiv.insertBefore(select, typeDiv.firstChild);
-                                            typeDiv.insertBefore(input, typeDiv.firstChild);">{{ __('Add type') }}</a>
+                                            inputDiv.setAttribute('class', 'row');
+                                            inputDiv.insertBefore(input, inputDiv.firstChild);
+                                            inputDiv.insertBefore(select, inputDiv.firstChild);
+                                            typeDiv.insertBefore(inputDiv, typeDiv.firstChild);">{{ __('Add type') }}</a>
                                     <div id="add-type"></div>
                                 </div>
                             </div>

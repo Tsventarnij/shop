@@ -54,9 +54,8 @@ class Product extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        $productDTO = $request->only('title', 'description', 'price', 'category_id', 'media', 'add_type', 'add_values');
-        $this->productRepo->create($productDTO);
-
+        $input = $request->only('title', 'description', 'price', 'category_id', 'media', 'add_type', 'add_values');
+        $this->productRepo->create($input);
 
         return redirect(route('showMyProducts'));
     }
@@ -118,9 +117,6 @@ class Product extends Controller
 
     public function displayMy()
     {
-        $products = ProductModel::where('company_id', Auth::user()->company->id)->with('category')->get();
-        return view('product/owner_list', [
-            'products' => $products->toArray(),
-        ]);
+        return view('product/owner_list');
     }
 }

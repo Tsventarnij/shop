@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use \App\Http\Controllers\Api\Product as ProductApi;
 use \App\Http\Controllers\{
     Company,
     Product,
@@ -24,6 +25,9 @@ Route::get('/', [Product::class, 'index']);
 Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
+    Route::prefix('api')->group(function () {
+        Route::get('/my_products', [ProductApi::class, 'displayMy']);
+    });
     Route::get('/company/create', [Company::class, 'create']);
     Route::post('/company/create', [Company::class, 'store'])->name('companyCreate');
     Route::get('/company/edit', [Company::class, 'edit']);
